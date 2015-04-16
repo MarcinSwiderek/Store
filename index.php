@@ -1,11 +1,21 @@
 <?php 
-header("Content-Type: text/html");
+require_once ('connection.php');
 require 'vendor/autoload.php';
 include dirname(__FILE__) . '/vendor/altorouter/altorouter/AltoRouter.php';
+include ('./class/item.php');
+include ('./class/category.php');
+
+
+header("Content-Type: text/html");
+
+
 $router=new AltoRouter();
 $router->setBasePath('/store');
 $router->map('GET','/test2','test.php');
 $router->map('GET','/panel/test','test.php');
+/*function __autoload($className) {
+	include ("'./class/'.$className.'.php'");
+}*/
 
 
 
@@ -21,16 +31,29 @@ $router->map('GET','/panel/test','test.php');
 		<link href="/store/css/bootstrap.min.css" rel="stylesheet">
 	</head>
 	<body>
-		<header>
-			Tutaj menu
-		</header>	
-		<main>
+			
+	
 			<div class="container-fluid">
 			Zawartosc kontenera
 				<div class="row">
+					<div class="col-md-12">
+					menu
+					</div>
+				
+				</div>
+				<div class="row">
 					<div class="col-md-3">
 					pierwsza kol
+					<?php
 					
+					
+					//$gruszka->createItem('gruszka1', 1.99, 'owoc ', 'test', $conn);
+					//$pomidor=new item();
+					//$pomidor->loadItem('pomidor', $conn);
+					$kategoria=new category();
+					$kategoria->createCategory('testowakat', $conn);
+										
+					?>					
 					</div>
 					<div class="col-md-6">
 					druga kol 
@@ -58,9 +81,8 @@ $router->map('GET','/panel/test','test.php');
 	
 			</div>
 		</main>
-		<footer>
 		
-		</footer>
 	</body>
 
 </html>
+<?php $conn->close(); $conn=null;?>
