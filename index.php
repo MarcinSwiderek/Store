@@ -4,7 +4,8 @@ require 'vendor/autoload.php';
 include dirname(__FILE__) . '/vendor/altorouter/altorouter/AltoRouter.php';
 include ('./class/item.php');
 include ('./class/category.php');
-
+include ('./class/user.php');
+session_start();
 
 header("Content-Type: text/html");
 
@@ -13,6 +14,7 @@ $router=new AltoRouter();
 $router->setBasePath('/store');
 $router->map('GET','/test2','test.php');
 $router->map('GET','/panel/test','test.php');
+$router->map('GET','/register2','register.php');
 /*function __autoload($className) {
 	include ("'./class/'.$className.'.php'");
 }*/
@@ -21,7 +23,7 @@ $router->map('GET','/panel/test','test.php');
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="pl-PL">
 	<head>
 		
 		<meta charset="UTF-8">
@@ -34,10 +36,10 @@ $router->map('GET','/panel/test','test.php');
 			
 	
 			<div class="container-fluid">
-			Zawartosc kontenera
+			
 				<div class="row">
-					<div class="col-md-12">
-					menu
+					<div class="col-md-12"><!-- Miejsce na nawigacje -->
+					<a href="/store/register2">Zarejestruj się</a>
 					</div>
 				
 				</div>
@@ -50,8 +52,9 @@ $router->map('GET','/panel/test','test.php');
 					//$gruszka->createItem('gruszka1', 1.99, 'owoc ', 'test', $conn);
 					//$pomidor=new item();
 					//$pomidor->loadItem('pomidor', $conn);
-					$kategoria=new category();
-					$kategoria->createCategory('testowakat', $conn);
+					//$cat=new category();
+					//$cat->createCategory('tessst', $conn);
+					//$cat->getAllItemsIDs($conn);
 										
 					?>					
 					</div>
@@ -72,6 +75,20 @@ $router->map('GET','/panel/test','test.php');
 					</div>
 					<div class="col-md-3">
 					trzecia kol
+					<?php 
+					if(!isset($_SESSION['user_id'])){
+					?>
+					<form method="post" action="/store/login.php">
+						<fieldset>
+							<legend>Zaloguj się</legend>
+							<label>Email:</label><br>
+							<input type="email" name="email" class="form-control"><br>
+							<label>Hasło:</label><br>
+							<input type="password" name="password" class="form-control"><br>
+							<button type="submit" name="loginbutton">Zaloguj!</button>
+						</fieldset>
+					</form>
+					<?php };?>
 					
 					</div>			
 				

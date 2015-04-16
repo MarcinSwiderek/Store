@@ -65,6 +65,7 @@ Class item {
 		$result=$conn->query($sql);
 		if($result->num_rows > 0) {
 			$row=$result->fetch_assoc();
+			
 			$this->id          = $row['item_id'];
 			$this->name        = $row['item_name'];
 			$this->description = $row['item_description'];
