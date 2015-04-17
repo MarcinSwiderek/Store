@@ -35,7 +35,7 @@ Class item {
 			else return false;
 		}
 	}
-	public function removeItem(){ //działa
+	public function removeItem($conn){ //działa
 		
 		$sql="DELETE FROM Items WHERE item_id=$this->id";
 		$result=$conn->query($sql);
@@ -46,7 +46,16 @@ Class item {
 		$this->category=NULL;
 		
 	}
-	public function getItem($itemName,$conn) { //funkcja niekompletna i bezsensowna , zwraca dane w postaci tablicy
+	public function changeData($conn) {
+		$sql="UPDATE Items SET
+							item_name='$this->name',
+							item_price=$this->price,
+							item_description='$this->description',
+							item_category_id='$this->category'
+																WHERE item_id=$this->id";
+		$result=$conn->query($sql);
+	}
+	public function getItemData($itemName,$conn) { 
 		$sql="SELECT * FROM Items WHERE item_name='$itemName'";
 		
 		$result=$conn->query($sql);
@@ -103,6 +112,9 @@ Class item {
 	public function delPicture($id,$conn) {
 		$sql="DELETE FROM Pictures WHERE picture_id=$id";
 		$result=$conn->query($sql);
+	}
+	public function getName(){
+		return $this->name;
 	}
 	
 }

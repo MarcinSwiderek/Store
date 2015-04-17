@@ -4,15 +4,14 @@ Class category {
 	public $id;
 	public $name;
 	
-	public function createCategory($newName,$conn) { //działa bez walidacji
-		$sql="SELECT * FROM Categories WHERE category_name='$newName'";
+	public function createCategory($conn) { //działa bez walidacji
+		$sql="SELECT * FROM Categories WHERE category_name='{$this->name}'";
 		$res=$conn->query($sql);
 		if($res->num_rows > 0) {
 			return false;
 		}
 		else {
-			$this->name=$newName;
-			$sql="INSERT INTO Categories(category_name) VALUES ('".$newName."')";
+			$sql="INSERT INTO Categories(category_name) VALUES ('".$this->name."')";
 			$result=$conn->query($sql);
 			$this->id=$conn->insert_id;
 		}
@@ -81,6 +80,9 @@ Class category {
 			}
 		}
 		return $ItemArr;
+	}
+	public function getName(){
+		return $this->name;
 	}
 	
 }

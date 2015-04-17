@@ -1,0 +1,64 @@
+CREATE TABLE Items (
+	item_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	item_name varchar(255),
+	item_price float(9,2),
+	item_description text,
+	item_category_id int NOT NULL,
+	FOREIGN KEY(item_category_id) REFERENCES Categories(category_id)
+);
+	
+CREATE TABLE Pictures (
+	picture_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	picture_path varchar(255),
+	picture_item_id int NOT NULL,
+	FOREIGN KEY(picture_item_id) REFERENCES Items(item_id) ON DELETE CASCADE
+);
+	
+CREATE TABLE Categories (
+	category_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	category_name varchar(255)
+);
+CREATE TABLE Users (
+	user_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_password varchar(60),
+	user_name varchar(60),
+	user_email varchar(255),
+	user_adres varchar(255)
+);
+
+CREATE TABLE Orders (
+	order_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	order_status tinyint(1),
+	order_user_id int NOT NULL,
+	order_date date,
+	FOREIGN KEY(order_user_id) REFERENCES Users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE Orders_items (
+	order_item_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	order_item_order_id int NOT NULL,
+	order_item_item_id int NOT NULL,
+	order_item_quantity int,
+	FOREIGN KEY(order_item_order_id) REFERENCES Orders(order_id) ON DELETE CASCADE,
+	FOREIGN KEY(order_item_item_id) REFERENCES Items(item_id)
+);
+
+CREATE TABLE Admins (
+	admin_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	admin_email varchar(255),
+	admin_password varchar(255)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+

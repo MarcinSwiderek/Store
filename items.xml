@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<Categories 
+		category_id="1"
+		category_name="test"/>	
+
+	<Items
+		item_id="1"
+		item_name="cebula"
+		item_price="0.99"
+		item_description="opis cebuli"
+		item_category_id="1"/>
+	<Items
+		item_id="2"
+		item_name="pietruszka"
+		item_price="1.59"
+		item_description="opis pietruszki"
+		item_category_id="1"/>
+
+</dataset>

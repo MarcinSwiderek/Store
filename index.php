@@ -57,11 +57,11 @@ $router->map('GET','/admin2','admin.php');
 					pierwsza kol,miejsce na przedmioty i kategorie<br>
 					
 					<?php
-					$testItem=new item();
-					$testItem->loadItem('wisnia', $conn);
-					$testItem->printInformation();
-					echo "<br>";
-					$testItem->addPicture('/store/img/', $conn);
+					//$testItem=new item();
+					//$testItem->loadItem('wisnia', $conn);
+					//$testItem->printInformation();
+					//echo "<br>";
+					//$testItem->addPicture('/store/img/', $conn);
 					
 					
 					
