@@ -17,6 +17,7 @@ $router->map('GET','/test2','test.php');
 $router->map('GET','/panel/test','test.php');
 $router->map('GET','/register2','register.php');
 $router->map('GET','/admin2','admin.php');
+$router->map('POST','/registercheck','register.php');
 /*function __autoload($className) {
 	include ("'./class/'.$className.'.php'");
 }*/
@@ -72,7 +73,7 @@ $router->map('GET','/admin2','admin.php');
 					//$cat=new category();
 					//$cat->createCategory('tessst', $conn);
 					//$cat->getAllItemsIDs($conn);
-					$or=new order();
+					
 					
 					?>					
 					</div>
