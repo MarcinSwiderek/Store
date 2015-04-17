@@ -82,6 +82,7 @@ Class item {
 			$this->name        = $row['item_name'];
 			$this->description = $row['item_description'];
 			$this->price       = $row['item_price'];
+			$this->category    = $row['item_category_id'];
 		}
 		else return false;
 	}

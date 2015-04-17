@@ -5,6 +5,7 @@ include dirname(__FILE__) . '/vendor/altorouter/altorouter/AltoRouter.php';
 include ('./class/item.php');
 include ('./class/category.php');
 include ('./class/user.php');
+include ('./class/order.php');
 session_start();
 
 header("Content-Type: text/html");
@@ -39,7 +40,7 @@ $router->map('GET','/admin2','admin.php');
 			<div class="container-fluid">
 			
 				<div class="row">
-					<div class="col-md-12"><!-- Miejsce na nawigacje -->
+					<div class="col-md-12 text-center"><!-- Miejsce na nawigacje -->
 					
 						<a href="/store/index.php">Strona główna</a>
 						<a href="/store/register2">Zarejestruj się</a>
@@ -71,7 +72,8 @@ $router->map('GET','/admin2','admin.php');
 					//$cat=new category();
 					//$cat->createCategory('tessst', $conn);
 					//$cat->getAllItemsIDs($conn);
-										
+					$or=new order();
+					
 					?>					
 					</div>
 					<div class="col-md-6">
@@ -80,13 +82,10 @@ $router->map('GET','/admin2','admin.php');
 					$match=$router->match();
 					if($match) {
 						require $match['target'];
-						
 					}
 					else {
 						header("HTTP/1.0 404 Not Found");
-					
 					}
-					
 					?>
 					</div>
 					<div class="col-md-3">

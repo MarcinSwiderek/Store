@@ -21,13 +21,13 @@ class user {
 		else {
 			$sql="INSERT INTO Users(user_password,user_name,user_email,user_adres) VALUES 
 			                       ('$user_password','$user_name','$user_email','$user_address')";
-		
+			$result=$conn->query($sql);
 			$this->id		=	$conn->insert_id;
 			$this->name		=	$user_name;
 			$this->email	=	$user_email;
 			$this->address	=	$user_address;
 			$this->password	=	$user_password;
-		
+			return true;
 		}
 		
 	}
@@ -72,6 +72,7 @@ class user {
 		$result=$conn->query($sql);
 		if($result->num_rows > 0) {
 			$row=$result->fetch_assoc();
+			
 			$this->id			=	$row['user_id'];
 			$this->name			=	$row['user_name'];
 			$this->email		=	$row['user_email'];

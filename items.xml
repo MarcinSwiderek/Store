@@ -16,5 +16,11 @@
 		item_price="1.59"
 		item_description="opis pietruszki"
 		item_category_id="1"/>
+	<Users 
+		user_id="1"
+		user_name="Jan Janowski"
+		user_adres="Marszalkowska 8"
+		user_password="haslo"
+		user_email="jan@poczta.pl"/>
 
 </dataset>
