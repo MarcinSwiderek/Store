@@ -15,6 +15,7 @@ $router->setBasePath('/store');
 $router->map('GET','/test2','test.php');
 $router->map('GET','/panel/test','test.php');
 $router->map('GET','/register2','register.php');
+$router->map('GET','/admin2','admin.php');
 /*function __autoload($className) {
 	include ("'./class/'.$className.'.php'");
 }*/
@@ -39,14 +40,29 @@ $router->map('GET','/register2','register.php');
 			
 				<div class="row">
 					<div class="col-md-12"><!-- Miejsce na nawigacje -->
-					<a href="/store/register2">Zarejestruj się</a>
+					
+						<a href="/store/index.php">Strona główna</a>
+						<a href="/store/register2">Zarejestruj się</a>
+						<a href="/store/koszyk2">Koszyk</a>
+						<a href="/store/user2">Użytkownik</a>
+						<a href="/store/kontakt2">Kontakt</a>
+						<a href="/store/onas2">O nas</a>
+						<a href="/store/admin2">Admin</a>
+				
 					</div>
 				
 				</div>
 				<div class="row">
 					<div class="col-md-3">
-					pierwsza kol
+					pierwsza kol,miejsce na przedmioty i kategorie<br>
+					
 					<?php
+					$testItem=new item();
+					$testItem->loadItem('wisnia', $conn);
+					$testItem->printInformation();
+					echo "<br>";
+					$testItem->addPicture('/store/img/', $conn);
+					
 					
 					
 					//$gruszka->createItem('gruszka1', 1.99, 'owoc ', 'test', $conn);
@@ -59,7 +75,7 @@ $router->map('GET','/register2','register.php');
 					?>					
 					</div>
 					<div class="col-md-6">
-					druga kol 
+					druga kol , zmienna zawartość
 					<?php 
 					$match=$router->match();
 					if($match) {
@@ -97,8 +113,7 @@ $router->map('GET','/register2','register.php');
 			
 	
 			</div>
-		</main>
-		
+	
 	</body>
 
 </html>
