@@ -18,6 +18,10 @@ $router->map('GET','/panel/test','test.php');
 $router->map('GET','/register2','register.php');
 $router->map('GET','/admin2','admin.php');
 $router->map('POST','/registercheck','register.php');
+$router->map('GET','/main','index.php');
+$router->map('GET','/logout2','logout.php');
+$router->map('GET','/category/{i:id}','showCategory.php');
+$router->map('POST','/category/{i:id}','showCategory.php')
 /*function __autoload($className) {
 	include ("'./class/'.$className.'.php'");
 }*/
@@ -42,42 +46,41 @@ $router->map('POST','/registercheck','register.php');
 			
 				<div class="row">
 					<div class="col-md-12 text-center"><!-- Miejsce na nawigacje -->
-					
+						
 						<a href="/store/index.php">Strona główna</a>
-						<a href="/store/register2">Zarejestruj się</a>
 						<a href="/store/koszyk2">Koszyk</a>
 						<a href="/store/user2">Użytkownik</a>
 						<a href="/store/kontakt2">Kontakt</a>
 						<a href="/store/onas2">O nas</a>
+						<a href="/store/logout.php">Wyloguj</a>
+						<?php if(!isset($_SESSION['user_id'])) {?>
+						<a href="/store/register2">Zarejestruj się</a>
 						<a href="/store/admin2">Admin</a>
+						
+						<?php }?>
 				
 					</div>
 				
 				</div>
 				<div class="row">
-					<div class="col-md-3">
-					pierwsza kol,miejsce na przedmioty i kategorie<br>
-					
-					<?php
-					//$testItem=new item();
-					//$testItem->loadItem('wisnia', $conn);
-					//$testItem->printInformation();
-					//echo "<br>";
-					//$testItem->addPicture('/store/img/', $conn);
-					
-					
-					
-					//$gruszka->createItem('gruszka1', 1.99, 'owoc ', 'test', $conn);
-					//$pomidor=new item();
-					//$pomidor->loadItem('pomidor', $conn);
-					//$cat=new category();
-					//$cat->createCategory('tessst', $conn);
-					//$cat->getAllItemsIDs($conn);
-					
-					
-					?>					
+					<div class="col-md-2">
+						
+						<ul class="list-group text-left">
+						<?php
+							$categories=category::getAllCategories($conn);
+							foreach($categories as $category){
+								$count=category::countItems($category['category_id'], $conn);
+								echo "<li class='list-group-item'>
+										<span class='badge'>".$count."</span>
+										<a href='/store/category/{$category['category_id']}'>".$category['category_name']."</a>
+										</li>		";
+							}
+							
+						
+						?>	
+						</ul>				
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-8">
 					druga kol , zmienna zawartość
 					<?php 
 					$match=$router->match();
@@ -89,8 +92,8 @@ $router->map('POST','/registercheck','register.php');
 					}
 					?>
 					</div>
-					<div class="col-md-3">
-					trzecia kol
+					<div class="col-md-2">
+					logowanie/koszyk
 					<?php 
 					if(!isset($_SESSION['user_id'])){
 					?>

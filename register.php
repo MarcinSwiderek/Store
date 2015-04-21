@@ -10,15 +10,15 @@
 				$name=trim($_POST['name']);
 				$address=trim($_POST['address']);
 				
-				if($password===$passwordrepeat) {
+				if($password==$passwordrepeat) {
 					//filtry,sanityzacja 
 						/*$email=filter_var($email,FILTER_SANITIZE_EMAIL);
 						$name=filter_var($name,FILTER_SANITIZE_ENCODED);
 						$address=filter_var($address,FILTER_SANITIZE_ENCODED);
 						 */
-						addslashes($email);
-						addslashes($name);
-						addslashes($address);
+						$email=addslashes($email);
+						$name=addslashes($name);
+						$address=addslashes($address);
 						/*$options= [
 								'cost' => 5,
 								'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
@@ -33,7 +33,7 @@
 						
 				}
 				else return false;
-				header("Location: /register2");
+				header("Location: store/register2");
 				echo "Spróbuj jeszcze raz";
 			}
 			else return false;

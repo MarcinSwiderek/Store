@@ -126,6 +126,21 @@ class category{
 		}
 		return false;
 	}
+	public static function getAllCategories($conn) {
+		$sql="SELECT * FROM Categories";
+		$result=$conn->query($sql);
+		$ret=array();
+		if($result->num_rows > 0) {
+			while($row=$result->fetch_assoc()) {
+				
+				
+				array_push($ret,$row);
+				
+			}
+			return $ret;
+		}
+		return null;
+	}
 	public static function getCategory($id,$conn){
 		$sql="SELECT * FROM Categories WHERE category_id=$id";
 		$result=$conn->query($sql);
@@ -144,9 +159,22 @@ class category{
 	public function setName($newName){
 		$this->name=$newName;
 	}
-	public function getAllItems(){
-		$sql="SELECT * FROM Items WHERE item_category_id=$this->id";
+	public static function countItems($id,$conn) {
+		$sql="SELECT * FROM Items WHERE item_category_id=$id";
 		$result=$conn->query($sql);
+		return $result->num_rows;
+	}
+	public static function getAllItemsIDs($id,$conn){
+		$sql="SELECT * FROM Items WHERE item_category_id=$id";
+		$result=$conn->query($sql);
+		$ret=array();
+		if($result->num_rows > 0) {
+			while($row=$result->fetch_assoc()) {
+			     array_push($ret, $row['item_id']);
+			}
+			return $ret;
+		}
+		return null;
 		
 	}
 	public function setToDB($conn) {

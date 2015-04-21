@@ -63,7 +63,7 @@ class user {
 	public static function AuthenticateUser($userMail,$password,$conn) {
 		$sql="SELECT * FROM Users WHERE user_email='$userMail'";
 		$result=$conn->query($sql);
-		if($result->num_rows !=1 ) {
+		if($result->num_rows ==1 ) {
 			$userData=$result->fetch_assoc();
 			$user= new user($userData['user_id'],$userData['user_name'],$userData['user_email'],$userData['user_adres'],$userData['user_password']);
 		
@@ -82,6 +82,7 @@ class user {
 				$ret[]=$row;
 			}
 		}
+		var_dump($ret);
 		return $ret;
 	}
 	public static function GetUserInfo($id,$conn) {
@@ -129,7 +130,7 @@ class user {
 		if(password_verify($password, $hashed_pass)) {
 			return true;//false u Jacka
 		}
-		return false;
+		else return false;
 	}
 	
 }
