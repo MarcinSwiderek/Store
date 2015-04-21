@@ -104,7 +104,7 @@ $router->map('POST','/registercheck','register.php');
 							<button type="submit" name="loginbutton">Zaloguj!</button>
 						</fieldset>
 					</form>
-					<?php };?>
+					<?php }?>
 					
 					</div>			
 				

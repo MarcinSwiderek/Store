@@ -13,7 +13,7 @@ class itemTest extends PHPUnit_Extensions_Database_TestCase {
 												($conn,$GLOBALS['DB_DBNAME']);
 	}
 	public function getDataSet() {
-		$dataFlatXML = $this->createFlatXmlDataSet('items.xml');
+		$dataFlatXML = $this->createFlatXmlDataSet('./tests/items.xml');
 		return $dataFlatXML;
 	}
 	public static function setUpBeforeClass() {
@@ -24,29 +24,7 @@ class itemTest extends PHPUnit_Extensions_Database_TestCase {
 		itemTest::$conn->close();
 		itemTest::$conn=NULL;
 	}
-	public function testCRUDCategory(){
-		$cat = new category();
-		$cat->name = "My Test Category";
-		$cat->id =null;
-		
-		$cat->createCategory(itemTest::$conn);
-		$this->assertNotNull($cat->id);		
-		
-		$cat2 = new category();
-		$cat2->loadCategory($cat->name, itemTest::$conn);
-		$this->assertEquals($cat->id, $cat2->id);
-		
-		$cat3 = new category();
-		$cat3->loadCategory($cat->name, itemTest::$conn);
-		$this->assertEquals($cat3->name, $cat->name);
-		
-		$cat3->removeCategory(itemTest::$conn);
-		$this->assertEquals($cat3->id,NULL);
-		$this->assertEquals($cat3->name,NULL);
-		
-		$cat3->loadCategory($cat3->name, itemTest::$conn);
-		$this->assertEquals($cat3->id,NULL);
-	}
+	
 	public function testCRUDItems() {
 		$cat=new category();
 		$cat->name="My Test Category";
@@ -109,44 +87,5 @@ class itemTest extends PHPUnit_Extensions_Database_TestCase {
 		
 		
 	}
-	public function testCRUDUsers() {
-		$usr=new user();
-		
-	    $returned = $usr->createUser('test@test.pl','haslo','Jan Kowalski','Willowa 7' , itemTest::$conn);
-		$this->assertEquals(true, $returned);
-	    
-	    $this->assertEquals($usr->email,'test@test.pl');
-		$this->assertEquals($usr->name,'Jan Kowalski');
-		$this->assertEquals($usr->address,'Willowa 7');
-		
-		$loadedusr=new user();
-		$loadedusr->loadUser($usr->id, itemTest::$conn);
-		
-		$this->assertEquals($loadedusr->name,$usr->name);
-		$this->assertEquals($loadedusr->id,$usr->id);
-		$this->assertEquals($loadedusr->email,$usr->email);
-		$this->assertEquals($loadedusr->address,$usr->address);
-		
-		$changedusr=new user();
-		$changedusr->loadUser($loadedusr->id, itemTest::$conn);
-		
-		$changedusr->name='Janusz Kowalski';
-		$changedusr->email='Janusz@test.pl';
-		$changedusr->address='Wiejska 5';
-		
-		$this->assertEquals($changedusr->id,$loadedusr->id);
-		$this->assertNotEquals($changedusr->name,$loadedusr->name);
-		$this->assertNotEquals($changedusr->email,$loadedusr->email);
-		$this->assertNotEquals($changedusr->address,$loadedusr->address);
-		
-		$changedusr->removeUser(itemTest::$conn);
-		
-		$this->assertNull($changedusr->id);
-		$this->assertNull($changedusr->name);
-		$this->assertNull($changedusr->address);
-		$this->assertNull($changedusr->email);
-		
-		
-		
-	}
+	
 }

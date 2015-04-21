@@ -2,40 +2,52 @@
 
 <?php 
 	if($_SERVER['REQUEST_METHOD']==="POST") {
-		if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password2'])) {
-			$email=trim($_POST['email']);
-			$password=trim($_POST['password']);
-			$passwordrepeat=trim($_POST['password2']);
-			$name=trim($_POST['name']);
-			$address=trim($_POST['address']);
-			
-			if($password===$passwordrepeat) {
-				//filtry,sanityzacja 
-				$sql="SELECT * FROM Users WHERE user_email='$email'";
-				$result=$conn->query($sql);
-				if($result->num_rows=0) {
-					$options= [
-							'cost' => 5,
-							'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
-					];
-					$hashedPass=password_hash($password, PASSWORD_BCRYPT,$options);
-					$sql="INSERT INTO Users(user_name,user_password,user_address,user_email) VALUES 
-											('$name','$hashedPass','$address','$email'";
-					$res=$conn->query($sql);
-					$_SESSION['user_id']=$conn->insert_id;
-					$_SESSION['user_email']=$email;
-					$_SESSION['user_name']=$name;
-					header("Location: /store/index.php");
+		if(!isset($_SESSION['user_id'])) {		
+			if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password2'])) {
+				$email=trim($_POST['email']);
+				$password=trim($_POST['password']);
+				$passwordrepeat=trim($_POST['password2']);
+				$name=trim($_POST['name']);
+				$address=trim($_POST['address']);
+				
+				if($password===$passwordrepeat) {
+					//filtry,sanityzacja 
+						/*$email=filter_var($email,FILTER_SANITIZE_EMAIL);
+						$name=filter_var($name,FILTER_SANITIZE_ENCODED);
+						$address=filter_var($address,FILTER_SANITIZE_ENCODED);
+						 */
+						addslashes($email);
+						addslashes($name);
+						addslashes($address);
+						/*$options= [
+								'cost' => 5,
+								'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+						];*/
+						$user=user::CreateUser($email, $password, $name, $address, $conn);
+						
+						$_SESSION['user_id']=$user->getID();
+						$_SESSION['user_email']=$user->getEmail();
+						$_SESSION['user_name']=$user->getName();
+						header("Location: /store/index.php");
+						
+						
 				}
 				else return false;
+				header("Location: /register2");
+				echo "Spróbuj jeszcze raz";
 			}
 			else return false;
+		}
+		else{
+			echo "Jesteś już zalogowany!";
+			
 			
 		}
-		
-		
-		
 	}
+		
+		
+		
+	
 
 
 ?>
@@ -46,7 +58,7 @@
 
 
 
-
+<?php if(!isset($_SESSION['user_id'])) { ?>
 
 <div class="form-group">
 <form action="/store/registercheck" method="post">
@@ -72,4 +84,9 @@
 	
 	</fieldset>
 </form>
+
 </div>
+
+<?php } else {?>
+<h2>Jesteś już zalogowany!</h2>
+<?php }?>

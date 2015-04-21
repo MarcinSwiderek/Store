@@ -1,5 +1,5 @@
 <?php
-
+/*
 Class category {
 	public $id;
 	public $name;
@@ -8,7 +8,7 @@ Class category {
 		$sql="SELECT * FROM Categories WHERE category_name='{$this->name}'";
 		$res=$conn->query($sql);
 		if($res->num_rows > 0) {
-			return false;
+			return null;
 		}
 		else {
 			$sql="INSERT INTO Categories(category_name) VALUES ('".$this->name."')";
@@ -85,4 +85,72 @@ Class category {
 		return $this->name;
 	}
 	
+}
+*/
+
+
+class category{
+	private $id;
+	private $name;
+	
+	public function __construct($newID,$newName){
+		$this->id=$newID;
+		$this->name=$newName;
+	}
+	public static function createCategory($newName,$conn){
+		$sql="SELECT * FROM Categories WHERE category_name='$newName'";
+		$result=$conn->query($sql);
+		if($result->num_rows == 0) {
+			$sql="INSERT INTO Categories(category_name) VALUES ('$newName')";
+			if($conn->query($sql) === TRUE){
+				return new category($conn->insert_id,$newName);
+			} 
+		}
+		return null;
+	}
+	public static function deleteCategory(category $toDelete,$conn){
+		$DEFAULT_CATEGORY_ID=9;
+		
+		$sql="SELECT * FROM Items WHERE item_category_id=$toDelete->getID()";
+		$result=$conn->query($sql);
+		if($result->num_rows > 0) {
+			while($row=$result->fetch_assoc()) {
+				$item=item::getItem($row['item_id'], $conn);
+				$item->setCategory($DEFAULT_CATEGORY_ID);
+				$item->setToDB($conn);
+			}
+		}
+		$sql="DELETE FROM Categories WHERE category_id=$toDelete->getID()";
+		if($conn->query($sql)===TRUE){
+			return true;
+		}
+		return false;
+	}
+	public static function getCategory($id,$conn){
+		$sql="SELECT * FROM Categories WHERE category_id=$id";
+		$result=$conn->query($sql);
+		if($result->num_rows == 1) {
+			$categoryData=$result->fetch_assoc();
+			return new category($categoryData['category_id'],$categoryData['category_name']);
+		}
+		return -1;
+	}
+	public function getName(){
+		return $this->name;
+	}
+	public function getID(){
+		return $this->id;
+	}
+	public function setName($newName){
+		$this->name=$newName;
+	}
+	public function getAllItems(){
+		$sql="SELECT * FROM Items WHERE item_category_id=$this->id";
+		$result=$conn->query($sql);
+		
+	}
+	public function setToDB($conn) {
+		$sql="UPDATE Categories set category_name='$this->name' WHERE category_id=$this->id";
+		return $conn->query($sql);
+	}
 }

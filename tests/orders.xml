@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<Users 
+		user_id="1"
+		user_email="a@wp.pl"
+		user_name="Jan Kowalski"
+		user_adres="Konwiktorska 6"/>
+
+	<Orders
+		order_id="1"
+		order_user_id="1"
+		order_date="2015-04-10"
+		order_status="0"/>
+</dataset>
+		
+	
